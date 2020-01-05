@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 3.13.4)
+
+project(app)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+add_executable(${PROJECT_NAME} main.cpp)
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    CMAKE_CXX_STANDARD 17
+    CMAKE_CXX_STANDARD_REQUIRED ON
+    CMAKE_CXX_EXTENSIONS OFF
+)
