@@ -3,44 +3,49 @@
 #include <cstdlib>
 #include <utility>
 
-unsigned int lcm_iterative(unsigned int a, unsigned int b)
+int lcm_iterative(int const a, int const b)
 {
-    auto c = a * b;
-    while (b != 0) {
-        auto t = b;
-        b = a % b;
-        a = t;
+    auto _c = a * b;
+    auto _a = a;
+    auto _b = b;
+
+    while (_b != 0) {
+        auto t = _b;
+        _b = _a % _b;
+        _a = t;
     }
 
-    return c / a;
+    return _c / _a;
 }
 
-unsigned int lcm_iterative(const std::pair<unsigned int, unsigned int>& numbers)
+int lcm_iterative(const std::pair<int const, int const>& numbers)
 {
     return lcm_iterative(numbers.first, numbers.second);
 }
 
-unsigned int lcm_recursive(unsigned int a, unsigned int b)
+int lcm_recursive(int const a, int const b)
 {
     auto c = a * b;
 
     return c / lcm_recursive(b, a % b);
 }
 
-unsigned int lcm_recursive(const std::pair<unsigned int, unsigned int>& numbers)
+int lcm_recursive(const std::pair<int const, int const>& numbers)
 {
     return lcm_recursive(numbers.first, numbers.second);
 }
 
-unsigned int lcd_using_gcd(std::pair<unsigned int, unsigned int>& numbers)
+int lcd_using_gcd(std::pair<int const, int const>& numbers)
 {
-    return (numbers.first * numbers.second)
+    return std::abs(numbers.first * numbers.second)
         / std::gcd(numbers.first, numbers.second);
 }
 
+
+
 int main()
 {
-    std::pair<unsigned int, unsigned int> numbers(48, 14);
+    std::pair<int const, int const> numbers(-48, 14);
 
     std::cout << "STL : " << std::lcm(numbers.first, numbers.second) << std::endl;
     std::cout << "Euclides iterative : " << lcm_iterative(numbers) << std::endl;
