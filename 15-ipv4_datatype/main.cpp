@@ -71,6 +71,7 @@ std::istream& operator>>(std::istream& is, IPv4Address& obj)
     std::string address;
     is >> address;
     obj.from_str(address);
+    return is;
 }
 
 int main()
@@ -78,7 +79,8 @@ int main()
     IPv4Address ipv4_address("192.168.9.21");
     std::cout << ipv4_address.to_str() << std::endl;
 
-    std::string("127.0.0.1") >> ipv4_address;
+    std::stringstream address;
+    address << "127.0.0.1";
+    address >> ipv4_address;
     std::cout << ipv4_address << std::endl;
-
 }
