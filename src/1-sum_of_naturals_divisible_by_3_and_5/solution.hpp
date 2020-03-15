@@ -1,6 +1,8 @@
+#pragma once
+
 #include <iostream>
 
-int main()
+void func()
 {
     unsigned int upper_limit{0};
     unsigned long long sum{0};
@@ -14,5 +16,9 @@ int main()
         }
     }
     std::cout << "The sum is equal to " << sum << std::endl;
+}
 
+int returns_zero()
+{
+    return 3;
 }
