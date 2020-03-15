@@ -22,7 +22,7 @@ int main()
 {
     constexpr unsigned int input = 100;
 
-    for (int i = 0; i < (input - 6); ++i) {
+    for (unsigned i = 0; i < (input - 6); ++i) {
         if (is_prime(i) && is_prime(i + 6)) {
             std::cout << i << ", " << i + 6 << std::endl;
         }

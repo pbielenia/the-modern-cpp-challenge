@@ -11,7 +11,7 @@ std::vector<unsigned int> get_proper_divisors(unsigned int const n)
 {
     std::set<unsigned int> divisors;
 
-    for (auto i = 1; i < n; ++i) {
+    for (unsigned i = 1; i < n; ++i) {
         if (n % i == 0)
             divisors.insert(i);
     }
