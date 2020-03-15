@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.17)
+project(modern_cpp)
+
+include(cmake/SubmodulesUpdate.cmake)
+update_submodules()
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+add_subdirectory(src)

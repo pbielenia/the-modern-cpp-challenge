@@ -18,14 +18,14 @@ std::vector<unsigned int> sieve_of_eratosthenes(unsigned int upper_bound)
 
     for (int i = 2; i < std::sqrt(upper_bound); ++i) {
         if (truth_array[i] == true) {
-            for (int j = i^2; j < upper_bound; j += i) {
+            for (unsigned j = i^2; j < upper_bound; j += i) {
                 truth_array[j] = false;
             }
         }
     }
 
     std::vector<unsigned int> prime_numbers;
-    for (int i = 0; i < truth_array.size(); ++i) {
+    for (unsigned i = 0; i < truth_array.size(); ++i) {
         if (truth_array[i] == true) {
             prime_numbers.push_back(i);
         }

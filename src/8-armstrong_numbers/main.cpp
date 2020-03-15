@@ -24,7 +24,7 @@ std::vector<T> extract_digits(U number)
     digits.push_back(number % 100 / 10);
     digits.push_back(number % 10);
     
-    return std::move(digits);
+    return digits;
 }
 
 template<typename T>
