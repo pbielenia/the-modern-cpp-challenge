@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.17)
 
 # Chapter 1. Math problems
-add_subdirectory(1-sum_of_naturals_divisible_by_3_and_5)
+add_subdirectory(1-sum_of_naturals_divisible_by_3_or_5)
 add_subdirectory(2-greatest_common_divisor)
 add_subdirectory(3-least_common_multiple)
 add_subdirectory(4-largest_prime_smaller_than_given_number)
