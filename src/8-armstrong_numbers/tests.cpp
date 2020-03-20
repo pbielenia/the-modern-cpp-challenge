@@ -10,6 +10,6 @@ int main(int argc, char** argv)
 
 using namespace testing;
 
-TEST(LcmUsingGcd, ReturnsCorrectFrom5And7) {
-    ASSERT_THAT(0, 0);
+TEST(GenerateArmstrongNumbers, ReturnsCorrect) {
+    ASSERT_THAT(generate_armstrong_numbers<unsigned short>(), ElementsAre(153, 370, 371, 407));
 }
