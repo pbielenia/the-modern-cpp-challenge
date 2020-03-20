@@ -1,8 +1,7 @@
+#include "solution.hpp"
 #include <algorithm>
-#include <iostream>
-#include <string>
+#include <exception>
 #include <sstream>
-#include <vector>
 
 std::vector<std::string> split(const std::string& s, char delimiter)
 {
@@ -14,22 +13,6 @@ std::vector<std::string> split(const std::string& s, char delimiter)
     }
     return tokens;
 }
-
-class IPv4Address {
-public:
-    IPv4Address(const std::string& address);
-    ~IPv4Address() = default;
-
-    friend std::ostream& operator<<(std::ostream& os, const IPv4Address& obj);
-    friend std::istream& operator>>(std::istream& is, IPv4Address& obj);
-
-    void from_str(const std::string& address);
-    std::string to_str() const;
-
-private:
-    std::vector<std::uint8_t> m_address;
-    const char m_delimiter = '.';
-};
 
 IPv4Address::IPv4Address(const std::string& address)
 {
@@ -72,15 +55,4 @@ std::istream& operator>>(std::istream& is, IPv4Address& obj)
     is >> address;
     obj.from_str(address);
     return is;
-}
-
-int main()
-{
-    IPv4Address ipv4_address("192.168.9.21");
-    std::cout << ipv4_address.to_str() << std::endl;
-
-    std::stringstream address;
-    address << "127.0.0.1";
-    address >> ipv4_address;
-    std::cout << ipv4_address << std::endl;
 }
