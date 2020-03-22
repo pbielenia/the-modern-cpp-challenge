@@ -6,3 +6,7 @@ using namespace testing;
 TEST(Array2D, ConstructsFromTemplateWithTypeRowsAndColumnsNumber) {
     Array2D<int, 2, 3>{};
 }
+
+TEST(Array2D, ConstructsWithGivenElements) {
+    Array2D<char, 2, 3>{'a', 'b', 'c', 'd', 'e', 'f'};
+}
