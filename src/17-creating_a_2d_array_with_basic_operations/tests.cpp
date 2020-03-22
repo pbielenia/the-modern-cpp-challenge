@@ -3,6 +3,6 @@
 
 using namespace testing;
 
-TEST(Array2D, Exists) {
-
+TEST(Array2D, ConstructsFromTemplateWithTypeRowsAndColumnsNumber) {
+    Array2D<int, 2, 3>{};
 }
