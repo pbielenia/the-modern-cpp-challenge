@@ -6,6 +6,7 @@ target_link_libraries(${target_name}
     PRIVATE
         gtest
         gmock
+        gtest_main
 )
 
 target_compile_options(${target_name} 
