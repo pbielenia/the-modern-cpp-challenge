@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.17)
 set(target_name 17-creating_a_2d_array_with_basic_operations)
 
-add_executable(${target_name} Array2D.hpp Array2D.cpp tests.cpp)
+add_executable(${target_name} Array2D.hpp Array2D.cpp exceptions.hpp tests.cpp)
 target_link_libraries(${target_name}
     PRIVATE
         gtest
