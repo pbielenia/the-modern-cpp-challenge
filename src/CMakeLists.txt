@@ -19,7 +19,7 @@ add_subdirectory(8-armstrong_numbers)
 # Chapter 2. Language Features
 add_subdirectory(15-ipv4_data_type)
 # add_subdirectory(16-enumerating_ipv4_address_in_a_range)
-# add_subdirectory(17-creating_a_2d_array_with_basic_operations)
+add_subdirectory(17-creating_a_2d_array_with_basic_operations)
 # add_subdirectory(18-minimum_function_with_any_number_of_arguments)
 
 # Chapter 3. Strings and Regular Expressions
