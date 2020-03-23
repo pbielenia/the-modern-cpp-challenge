@@ -15,7 +15,18 @@ public:
         : elements(elements)
     {
         check_length_after_init(); 
-        
+    }
+
+    T& at(unsigned const row, unsigned const column)
+    {
+        check_array_limits(row, column);
+        return elements.at(get_index(row, column));
+    }
+
+    const T& at(unsigned const row, unsigned const column) const
+    {
+        check_array_limits(row, column);
+        return elements.at(get_index(row, column));
     }
 
 private:
@@ -31,7 +42,22 @@ private:
         }
     }
 
+    void check_array_limits(unsigned row, unsigned column) const
+    {
+        if (number_of_rows <= row)
+            throw RowIndexOutOfRangeException(row, number_of_rows);
+        if (number_of_columns <= column)
+            throw ColumnIndexOutOfRangeException(column, number_of_columns);
+    }
+
+    constexpr unsigned get_index(unsigned row, unsigned column) const noexcept
+    {
+        return row * number_of_rows + column;
+    }
+
     unsigned number_of_elements{R * C};
+    unsigned number_of_rows{R};
+    unsigned number_of_columns{C};
     std::vector<T> elements;
 
 };

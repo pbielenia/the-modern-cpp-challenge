@@ -38,3 +38,33 @@ public:
 private:
     std::string message;
 };
+
+class RowIndexOutOfRangeException : public Array2DException {
+public:
+    RowIndexOutOfRangeException(unsigned incorrect_row,
+                                unsigned max_correct_row)
+        : Array2DException("") // todo
+    {
+        message = "Row index (" + std::to_string(incorrect_row)
+                + ") is greater than the maximum possible one ("
+                + std::to_string(max_correct_row) + ")";
+    }
+
+private:
+    std::string message;
+};
+
+class ColumnIndexOutOfRangeException : public Array2DException {
+public:
+    ColumnIndexOutOfRangeException(unsigned incorrect_row,
+                                unsigned max_correct_row)
+        : Array2DException("") // todo
+    {
+        message = "Column index (" + std::to_string(incorrect_row)
+                + ") is greater than the maximum possible one ("
+                + std::to_string(max_correct_row) + ")";
+    }
+
+private:
+    std::string message;
+};
