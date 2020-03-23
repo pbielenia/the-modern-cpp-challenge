@@ -29,6 +29,16 @@ public:
         return elements.at(get_index(row, column));
     }
 
+    constexpr T* data()
+    {
+        return elements.data();
+    }
+
+    constexpr const T* data() const
+    {
+        return elements.data();
+    }
+
 private:
     void check_length_after_init()
     {

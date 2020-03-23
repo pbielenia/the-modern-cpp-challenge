@@ -35,3 +35,10 @@ TEST(Array2D, ThrowsWhenAccessingColumnOutOfRangeUsingAt) {
     auto arr = Array2D<char, 2, 3>{'a', 'b', 'c', 'd', 'e', 'f'};
     ASSERT_THROW(arr.at(0, 5), ColumnIndexOutOfRangeException);
 }
+
+TEST(Array2D, ReturnsStoredData) {
+    auto arr = Array2D<char, 2, 3>{'a', 'b', 'c', 'd', 'e', 'f'};
+    auto *buffer = arr.data();
+    ASSERT_THAT(std::vector(buffer, buffer + 6),
+                ElementsAreArray({'a', 'b', 'c', 'd', 'e', 'f'}));
+}
