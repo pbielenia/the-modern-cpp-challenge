@@ -48,3 +48,12 @@ TEST(Array2D, ReturnsContainerSize) {
     ASSERT_THAT(arr.size(), Eq(6));
 }
 
+TEST(Array2D, ReturnsNumberOfRows) {
+    auto arr = Array2D<char, 2, 3>{'a', 'b', 'c', 'd', 'e', 'f'};
+    ASSERT_THAT(arr.rows_count(), Eq(2));   
+}
+
+TEST(Array2D, ReturnsNumberOfColumns) {
+    auto arr = Array2D<char, 2, 3>{'a', 'b', 'c', 'd', 'e', 'f'};
+    ASSERT_THAT(arr.columns_count(), Eq(3));
+}

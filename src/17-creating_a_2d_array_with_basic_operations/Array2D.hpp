@@ -44,6 +44,16 @@ public:
         return number_of_elements;
     }
 
+    constexpr size_t rows_count() const
+    {
+        return number_of_rows;
+    }
+
+    constexpr size_t columns_count() const
+    {
+        return number_of_columns;
+    }
+
 private:
     void check_length_after_init()
     {
