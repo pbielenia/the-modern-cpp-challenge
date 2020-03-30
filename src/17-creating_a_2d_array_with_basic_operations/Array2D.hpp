@@ -8,6 +8,10 @@
 template<typename T, unsigned R, unsigned C>
 class Array2D {
 public:
+
+    using iterator = typename std::vector<T>::iterator;
+    using const_iterator = typename std::vector<T>::const_iterator;
+
     Array2D()
         : elements(number_of_elements) { }
 
@@ -16,6 +20,11 @@ public:
     {
         check_length_after_init(); 
     }
+
+    iterator begin() { return elements.begin(); }
+    const_iterator begin() const { return elements.begin(); }
+    iterator end() { return elements.end(); }
+    const_iterator end() const { return elements.end(); }
 
     T& at(unsigned const row, unsigned const column)
     {

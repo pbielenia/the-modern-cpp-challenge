@@ -57,3 +57,13 @@ TEST(Array2D, ReturnsNumberOfColumns) {
     auto arr = Array2D<char, 2, 3>{'a', 'b', 'c', 'd', 'e', 'f'};
     ASSERT_THAT(arr.columns_count(), Eq(3));
 }
+
+TEST(Array2D, ReturnsBeginIterator) {
+    auto arr = Array2D<char, 1, 2>{'a', 'b'};
+    ASSERT_THAT(*arr.begin(), Eq('a'));
+}
+
+TEST(Array2D, ReturnsEndIterator) {
+    auto arr = Array2D<char, 1, 2>{'a', 'b'};
+    ASSERT_THAT(*(--arr.end()), Eq('b'));
+}
