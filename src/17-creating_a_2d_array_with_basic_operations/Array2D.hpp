@@ -39,6 +39,11 @@ public:
         return elements.data();
     }
 
+    constexpr size_t size() const
+    {
+        return number_of_elements;
+    }
+
 private:
     void check_length_after_init()
     {

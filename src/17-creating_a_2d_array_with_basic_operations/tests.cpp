@@ -42,3 +42,9 @@ TEST(Array2D, ReturnsStoredData) {
     ASSERT_THAT(std::vector(buffer, buffer + 6),
                 ElementsAreArray({'a', 'b', 'c', 'd', 'e', 'f'}));
 }
+
+TEST(Array2D, ReturnsContainerSize) {
+    auto arr = Array2D<char, 2, 3>{'a', 'b', 'c', 'd', 'e', 'f'};
+    ASSERT_THAT(arr.size(), Eq(6));
+}
+
