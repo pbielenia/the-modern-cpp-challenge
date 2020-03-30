@@ -43,7 +43,7 @@ class RowIndexOutOfRangeException : public Array2DException {
 public:
     RowIndexOutOfRangeException(unsigned incorrect_row,
                                 unsigned max_correct_row)
-        : Array2DException(message) // todo
+        : Array2DException(message)
     {
         message = "Row index (" + std::to_string(incorrect_row)
                 + ") is greater than the maximum possible one ("
@@ -54,8 +54,8 @@ public:
 class ColumnIndexOutOfRangeException : public Array2DException {
 public:
     ColumnIndexOutOfRangeException(unsigned incorrect_row,
-                                unsigned max_correct_row)
-        : Array2DException(message) // todo
+                                   unsigned max_correct_row)
+        : Array2DException(message)
     {
         message = "Column index (" + std::to_string(incorrect_row)
                 + ") is greater than the maximum possible one ("
