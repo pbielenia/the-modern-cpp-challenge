@@ -1,23 +1,14 @@
 cmake_minimum_required(VERSION 3.17)
+
 set(target_name 8-armstrong_numbers)
 
-add_executable(${target_name} solution.hpp tests.cpp)
-target_link_libraries(${target_name}
-    PRIVATE
-        gtest
-        gmock
+add_library(${target_name} INTERFACE)
+target_include_directories(${target_name}
+    INTERFACE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
 target_compile_options(${target_name} 
-    PRIVATE
+   INTERFACE
         -Wall -Wextra -pedantic -Werror
-)
-
-add_test(unit_tests unit_tests)
-
-add_custom_command(
-     TARGET ${target_name}
-     COMMENT "Run tests"
-     POST_BUILD 
-     COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${target_name}
 )
