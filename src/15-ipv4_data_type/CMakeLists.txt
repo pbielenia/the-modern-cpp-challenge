@@ -1,23 +1,16 @@
 cmake_minimum_required(VERSION 3.17)
+
 set(target_name 15-ipv4_data_type)
 
-add_executable(${target_name} solution.hpp solution.cpp tests.cpp)
-target_link_libraries(${target_name}
+add_library(${target_name} STATIC src/IPv4Address.cpp)
+target_include_directories(${target_name}
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     PRIVATE
-        gtest
-        gmock
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/ipv4_data_type>
 )
 
 target_compile_options(${target_name} 
-    PRIVATE
+   INTERFACE
         -Wall -Wextra -pedantic -Werror
-)
-
-add_test(unit_tests unit_tests)
-
-add_custom_command(
-     TARGET ${target_name}
-     COMMENT "Run tests"
-     POST_BUILD 
-     COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${target_name}
 )
