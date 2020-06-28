@@ -4,8 +4,10 @@ unsigned int gcd_recursive(unsigned int a, unsigned int b)
 {
     auto c = a % b;
 
-    if (c == 0) return b;
-    else return gcd_recursive(b, c);
+    if (c == 0)
+        return b;
+    else
+        return gcd_recursive(b, c);
 }
 
 unsigned int gcd_iterative(unsigned int a, unsigned int b)
