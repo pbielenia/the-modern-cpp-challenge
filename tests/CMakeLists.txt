@@ -12,3 +12,5 @@ add_subdirectory(007-amicable_numbers)
 add_subdirectory(008-armstrong_numbers)
 
 add_subdirectory(015-ipv4_data_type)
+
+add_subdirectory(023-binary_to_string_conversion)
