@@ -23,7 +23,7 @@ add_subdirectory(015-ipv4_data_type)
 # add_subdirectory(18-minimum_function_with_any_number_of_arguments)
 
 # Chapter 3. Strings and Regular Expressions
-# add_subdirectory(23-binary_to_string_conversion)
+add_subdirectory(023-binary_to_string_conversion)
 # add_subdirectory(24-string_to_binary_conversion)
 # add_subdirectory(25-capitalizing_an_article_title)
 
