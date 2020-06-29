@@ -1,15 +1,26 @@
 #pragma once
 
+#include <iomanip>
+#include <sstream>
 #include <string>
-#include <vector>
 
 class BinToStrConverter {
 public:
     enum LettersCase { Lowercase, Uppercase };
 
-    static std::string convert(const std::vector<unsigned char>& data,
-                               LettersCase letters_case = Lowercase);
+    template<typename T>
+    static std::string convert(const T& data,
+                               [[maybe_unused]] LettersCase letters_case = Lowercase)
+    {
+        std::ostringstream converted;
+        if (letters_case == Uppercase) {
+            converted << std::uppercase;
+        }
 
-private:
-    //
+        for (const auto elem : data) {
+            converted << std::hex << std::setw(2) << std::setfill('0')
+                      << static_cast<int>(elem);
+        }
+        return converted.str();
+    }
 };
