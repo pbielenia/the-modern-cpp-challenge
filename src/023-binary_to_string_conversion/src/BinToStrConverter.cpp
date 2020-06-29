@@ -3,7 +3,7 @@
 #include <stdexcept>
 
 std::string BinToStrConverter::convert(const std::vector<unsigned char>& data,
-                                       LettersCase letters_case = Lowercase)
+                                       LettersCase letters_case)
 {
     if (letters_case == Lowercase) {
         return "baadfood";

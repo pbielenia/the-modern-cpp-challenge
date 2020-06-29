@@ -19,6 +19,12 @@ TEST(BinToStrConverter, ReturnsLowercaseFromHexVector)
                  "baadfood");
 }
 
+TEST(BinToStrConverter, ReturnsLowercaseFromHexVectorByDefault)
+{
+    std::vector<unsigned char> data{0xBA, 0xAD, 0xF0, 0x0D};
+    ASSERT_STREQ(BinToStrConverter::convert(data).c_str(), "baadfood");
+}
+
 TEST(DISABLED_BinToStrConverter, ReturnsNumbersFromIntArray) {}
 
 TEST(DISABLED_BinToStrConverter, ReturnsNumbersFromPOD) {}

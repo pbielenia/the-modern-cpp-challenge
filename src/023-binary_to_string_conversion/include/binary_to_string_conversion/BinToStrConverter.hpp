@@ -8,7 +8,7 @@ public:
     enum LettersCase { Lowercase, Uppercase };
 
     static std::string convert(const std::vector<unsigned char>& data,
-                               LettersCase letters_case);
+                               LettersCase letters_case = Lowercase);
 
 private:
     //
