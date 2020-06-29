@@ -1,10 +1,21 @@
 #include "binary_to_string_conversion/BinToStrConverter.hpp"
 
 #include <gmock/gmock.h>
+#include <vector>
 
 using namespace testing;
 
-TEST(BinToStrConverter, ConstructsItself)
+TEST(BinToStrConverter, ReturnsUppercaseFromVector)
 {
-    BinToStrConverter converter();
+    std::vector<unsigned char> data{0xBA, 0xAD, 0xF0, 0x0D};
+    ASSERT_STREQ(BinToStrConverter::convert(data, BinToStrConverter::Uppercase),
+                 "BAADFOOD");
 }
+
+TEST(DISABLED_BinToStrConverter, ReturnsLowercaseFromHexVector) {}
+
+TEST(DISABLED_BinToStrConverter, ReturnsLowercaseFromHexVector) {}
+
+TEST(DISABLED_BinToStrConverter, ReturnsNumbersFromIntArray) {}
+
+TEST(DISABLED_BinToStrConverter, ReturnsNumbersFromPOD) {}
