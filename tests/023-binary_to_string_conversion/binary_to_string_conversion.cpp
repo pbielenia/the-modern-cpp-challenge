@@ -12,7 +12,12 @@ TEST(BinToStrConverter, ReturnsUppercaseFromVector)
                  "BAADFOOD");
 }
 
-TEST(DISABLED_BinToStrConverter, ReturnsLowercaseFromHexVector) {}
+TEST(BinToStrConverter, ReturnsLowercaseFromHexVector)
+{
+    std::vector<unsigned char> data{0xBA, 0xAD, 0xF0, 0x0D};
+    ASSERT_STREQ(BinToStrConverter::convert(data, BinToStrConverter::Lowercase).c_str(),
+                 "baadfood");
+}
 
 TEST(DISABLED_BinToStrConverter, ReturnsNumbersFromIntArray) {}
 
