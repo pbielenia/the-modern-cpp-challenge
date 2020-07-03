@@ -9,8 +9,7 @@ public:
     enum LettersCase { Lowercase, Uppercase };
 
     template<typename T>
-    static std::string convert(const T& data,
-                               [[maybe_unused]] LettersCase letters_case = Lowercase)
+    static std::string convert(const T& data, LettersCase letters_case = Lowercase)
     {
         std::ostringstream converted;
         if (letters_case == Uppercase) {
