@@ -9,12 +9,16 @@ class ProjectCreator(object):
         self.number = number
         self.title = title
         self.class_name = class_name
-        self.full_name = self.__generate_full_name()
-        self.project_path = self.__generate_project_path()
 
+        self.__include_dir_name = 'include'
+        self.__source_dir_name = 'src'
+        self.__tests_dir_name = 'tests'
         self.__header_name = self.class_name + '.hpp'
         self.__source_name = self.class_name + '.cpp'
         self.__unit_tests_name = 'unit_tests.cpp'
+
+        self.full_name = self.__generate_full_name()
+        self.project_path = self.__generate_project_path()
 
         self.__include_dir_path = self.__generate_include_dir_path()
         self.__source_dir_path = self.__generate_source_dir_path()
@@ -27,16 +31,16 @@ class ProjectCreator(object):
         return str(self.number).zfill(3) + '-' + self.title
 
     def __generate_project_path(self):
-        return os.getcwd() + '/src/' + self.full_name + '/'
+        return os.getcwd() + '/' + self.__source_dir_name + '/' + self.full_name + '/'
 
     def __generate_include_dir_path(self):
-        return self.project_path + 'include/' + self.title + '/'
+        return self.project_path + self.__include_dir_name + '/' + self.title + '/'
 
     def __generate_source_dir_path(self):
-        return self.project_path + 'src/'
+        return self.project_path + self.__source_dir_name
 
     def __generate_unit_tests_dir_path(self):
-        return os.getcwd() + '/tests/' + self.full_name + '/'
+        return os.getcwd() + '/' + self.__tests_dir_name + '/' + self.full_name + '/'
 
     def __create_header_file(self):
         header = open(self.__header_path, 'w+')
@@ -60,13 +64,14 @@ class ProjectCreator(object):
         source = open(self.project_path + '/CMakelists.txt', 'w+')
         source.write("cmake_minimum_required(VERSION 3.17)\n\n"
                      "set(target_name " + self.full_name + ")\n\n"
-                     "add_library(${target_name} STATIC src/" +
+                     "add_library(${target_name} STATIC " + self.__source_dir_name + "/" +
                      self.__source_name + ")\n"
                      "target_include_directories(${target_name}\n"
                      "PUBLIC\n"
-                     "\t$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>\n"
+                     "\t$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/" +
+                     self.__include_dir_name + ">\n"
                      "PRIVATE\n"
-                     "\t$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/" +
+                     "\t$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/" + self.__include_dir_name + "/" +
                      self.title + ">\n"
                      ")\n\n"
                      "target_compile_options(${target_name}"
@@ -126,12 +131,22 @@ class ProjectCreator(object):
         self.__create_unit_tests_cmakelists_file()
         self.__create_unit_tests_file()
 
+    def register_project(self):
+        self.__register_sources()
+        self.__register_tests()
+
+    def __register_sources(self):
+        f = open(self.__source_dir_name + "/CMakeLists.txt", "a")
+        f.write("add_subdirectory(" + self.full_name + ")\n")
+        f.close()
+
+    def __register_tests(self):
+        f = open(self.__tests_dir_name + "/CMakeLists.txt", "a")
+        f.write("add_subdirectory(" + self.full_name + ")\n")
+        f.close()
+
 
 creator = ProjectCreator(sys.argv[1], sys.argv[2], sys.argv[3])
 creator.create_directories()
 creator.create_files()
-
-# get user input as arguments
-# create:
-#   [ ] record in the src/CMakeLists.txt
-#   [ ] record in the tests/CMakeLists.txt
+creator.register_project()
