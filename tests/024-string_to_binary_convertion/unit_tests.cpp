@@ -4,7 +4,14 @@
 
 using namespace testing;
 
-TEST(StrToBinConverter, ExampleTest)
+TEST(StrToBinConverter, ReturnsCorrectFromUppercaseHexString)
 {
-	auto example = StrToBinConverter();
+    ASSERT_THAT(StrToBinConverter::convert("BAADFOOD"),
+                ElementsAre(0xBA, 0xAD, 0xF0, 0x0D));
+}
+
+TEST(DISABLED_StrToBinConverter, ReturnsCorrectFromLowercaseHexString)
+{
+    ASSERT_THAT(StrToBinConverter::convert("baadfood"),
+                ElementsAre(0xBA, 0xAD, 0xF0, 0x0D));
 }
