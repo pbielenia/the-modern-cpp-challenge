@@ -37,7 +37,7 @@ class ProjectCreator(object):
         return self.project_path + self.__include_dir_name + '/' + self.title + '/'
 
     def __generate_source_dir_path(self):
-        return self.project_path + self.__source_dir_name
+        return self.project_path + self.__source_dir_name + '/'
 
     def __generate_unit_tests_dir_path(self):
         return os.getcwd() + '/' + self.__tests_dir_name + '/' + self.full_name + '/'
