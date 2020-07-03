@@ -74,7 +74,7 @@ class ProjectCreator(object):
                      "\t$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/" + self.__include_dir_name + "/" +
                      self.title + ">\n"
                      ")\n\n"
-                     "target_compile_options(${target_name}"
+                     "target_compile_options(${target_name}\n"
                      "PRIVATE\n"
                      "\t-Wall -Wextra -pedantic -Werror\n"
                      ")\n"
