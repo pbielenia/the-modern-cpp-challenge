@@ -1,14 +1,22 @@
 cmake_minimum_required(VERSION 3.17)
-project(modern_cpp)
+project(modern_cpp CXX)
 
-include(cmake/SubmodulesUpdate.cmake)
-update_submodules()
+option(ENABLE_TESTING "Enable tests builds" On)
+option(UPDATE_SUBMODULES "Enable updating git submodules" On)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/tests)
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_BUILD_TYPE debug)
+set(CMAKE_EXPORT_COMPILE_COMMANDS On)
 
-add_subdirectory(libs/googletest)
+if(UPDATE_SUBMODULES)
+    include(cmake/SubmodulesUpdate.cmake)
+    update_submodules()
+endif()
+
+if(ENABLE_TESTING)
+    message(STATUS "Building with tests")
+    enable_testing()
+    set(INSTALL_GTEST OFF CACHE INTERNAL "")
+    add_subdirectory(libs/googletest)
+    add_subdirectory(tests)
+endif()
+
 add_subdirectory(src)
