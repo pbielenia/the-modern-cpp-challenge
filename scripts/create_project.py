@@ -61,7 +61,7 @@ class ProjectCreator(object):
         source.close()
 
     def __create_cmakelists_file(self):
-        source = open(self.project_path + '/CMakelists.txt', 'w+')
+        source = open(self.project_path + '/CMakeLists.txt', 'w+')
         source.write("cmake_minimum_required(VERSION 3.17)\n\n"
                      "set(target_name " + self.full_name + ")\n\n"
                      "add_library(${target_name} STATIC " + self.__source_dir_name + "/" +
@@ -82,7 +82,7 @@ class ProjectCreator(object):
         source.close()
 
     def __create_unit_tests_cmakelists_file(self):
-        cmakelists = open(self.__unit_tests_dir_path + '/CMakelists.txt', 'w+')
+        cmakelists = open(self.__unit_tests_dir_path + '/CMakeLists.txt', 'w+')
         cmakelists.write("cmake_minimum_required(VERSION 3.17)\n\n"
                          "include(GoogleTest)\n\n"
                          "set(target_name " + self.full_name + "_tests)\n"
