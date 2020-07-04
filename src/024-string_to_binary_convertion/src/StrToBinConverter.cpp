@@ -5,12 +5,11 @@
 std::vector<unsigned char> StrToBinConverter::convert(const std::string& hexstring)
 {
     std::vector<unsigned char> result;
-    static const unsigned char hex_base = 16;
 
     if (hexstring.size() % 2 == 0) {
         for (unsigned i = 0; i < hexstring.size(); i += 2) {
             unsigned char integer =
-                to_hex(hexstring.at(i)) * hex_base + to_hex(hexstring.at(i + 1));
+                create_integer(to_hex(hexstring.at(i)), to_hex(hexstring.at(i + 1)));
             result.push_back(integer);
         }
     }
@@ -32,4 +31,10 @@ std::uint8_t StrToBinConverter::to_hex(unsigned char hex_char)
         throw std::runtime_error("Character " + std::to_string(hex_char)
                                  + "is not hexadecimal");
     }
+}
+
+unsigned char StrToBinConverter::create_integer(unsigned char higher, unsigned char lower)
+{
+    static constexpr unsigned char hex_base = 16;
+    return higher * hex_base + lower;
 }

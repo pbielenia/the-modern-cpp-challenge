@@ -12,4 +12,5 @@ public:
 
 private:
     static std::uint8_t to_hex(unsigned char);
+    static unsigned char create_integer(unsigned char, unsigned char);
 };
