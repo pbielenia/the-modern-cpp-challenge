@@ -1,6 +1,8 @@
 #include "string_to_binary_convertion/StrToBinConverter.hpp"
 
+#include <algorithm>
 #include <cctype>
+#include <iterator>
 
 std::vector<unsigned char> StrToBinConverter::convert(const std::string& hexstring)
 {
@@ -24,6 +26,16 @@ std::vector<unsigned char> StrToBinConverter::convert(const std::string& hexstri
     return result;
 }
 
+std::vector<unsigned char> StrToBinConverter::convert(const std::string& hexstring,
+                                                      char delimiter)
+{
+    std::string continous_hexstring;
+    std::copy_if(hexstring.begin(), hexstring.end(),
+                 std::back_inserter(continous_hexstring),
+                 [delimiter](char c) { return c != delimiter; });
+    return convert(continous_hexstring);
+}
+
 std::uint8_t StrToBinConverter::to_hex(unsigned char hex_char)
 {
     static const std::map<unsigned char, unsigned char> hex_bytes{
@@ -36,7 +48,7 @@ std::uint8_t StrToBinConverter::to_hex(unsigned char hex_char)
         return hex_bytes.at(common_hex_char);
     } else {
         throw std::runtime_error("Character " + std::to_string(hex_char)
-                                 + "is not hexadecimal");
+                                 + " is not hexadecimal");
     }
 }
 

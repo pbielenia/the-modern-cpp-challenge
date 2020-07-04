@@ -21,3 +21,9 @@ TEST(StrToBinConverter, InsertsLeadingZeroWhenPassedOddCharactersLength)
     ASSERT_THAT(StrToBinConverter::convert("BADF00D"),
                 ElementsAre(0x0B, 0xAD, 0xF0, 0x0D));
 }
+
+TEST(StrToBinConverter, DeserializesHexstringSpaceSeparated)
+{
+    ASSERT_THAT(StrToBinConverter::convert("BA AD F0 0D", ' '),
+                ElementsAre(0xBA, 0xAD, 0xF0, 0x0D));
+}
