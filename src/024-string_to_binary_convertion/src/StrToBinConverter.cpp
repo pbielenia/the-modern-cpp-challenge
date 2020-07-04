@@ -5,13 +5,20 @@
 std::vector<unsigned char> StrToBinConverter::convert(const std::string& hexstring)
 {
     std::vector<unsigned char> result;
+    unsigned starting_index = 0;
 
-    if (hexstring.size() % 2 == 0) {
-        for (unsigned i = 0; i < hexstring.size(); i += 2) {
-            unsigned char integer =
-                create_integer(to_hex(hexstring.at(i)), to_hex(hexstring.at(i + 1)));
-            result.push_back(integer);
-        }
+    if (hexstring.size() > 0 && hexstring.size() % 2 == 0) {
+        result.push_back(
+            create_integer(to_hex(hexstring.at(0)), to_hex(hexstring.at(1))));
+        starting_index = 2;
+    } else {
+        result.push_back(create_integer(0, to_hex(hexstring.at(0))));
+        starting_index = 1;
+    }
+    for (unsigned i = starting_index; i < hexstring.size(); i += 2) {
+        unsigned char integer =
+            create_integer(to_hex(hexstring.at(i)), to_hex(hexstring.at(i + 1)));
+        result.push_back(integer);
     }
 
     return result;
