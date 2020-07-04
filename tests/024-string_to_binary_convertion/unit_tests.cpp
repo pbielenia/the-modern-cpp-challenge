@@ -6,12 +6,12 @@ using namespace testing;
 
 TEST(StrToBinConverter, ReturnsCorrectFromUppercaseHexString)
 {
-    ASSERT_THAT(StrToBinConverter::convert("BAADFOOD"),
+    ASSERT_THAT(StrToBinConverter::convert("BAADF00D"),
                 ElementsAre(0xBA, 0xAD, 0xF0, 0x0D));
 }
 
-TEST(DISABLED_StrToBinConverter, ReturnsCorrectFromLowercaseHexString)
+TEST(StrToBinConverter, ReturnsCorrectFromLowercaseHexString)
 {
-    ASSERT_THAT(StrToBinConverter::convert("baadfood"),
+    ASSERT_THAT(StrToBinConverter::convert("baadf00d"),
                 ElementsAre(0xBA, 0xAD, 0xF0, 0x0D));
 }
