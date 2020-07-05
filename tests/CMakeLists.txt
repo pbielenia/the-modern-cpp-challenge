@@ -15,3 +15,4 @@ add_subdirectory(015-ipv4_data_type)
 
 add_subdirectory(023-binary_to_string_conversion)
 add_subdirectory(024-string_to_binary_convertion)
+add_subdirectory(025-capitalizing_an_article_title)
