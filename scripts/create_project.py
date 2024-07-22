@@ -2,9 +2,10 @@
 import sys
 import os
 from pathlib import Path
+import argparse
 
 
-class ProjectCreator(object):
+class ProjectCreator:
     def __init__(self, number, title, class_name):
         self.number = number
         self.title = title
@@ -146,7 +147,39 @@ class ProjectCreator(object):
         f.close()
 
 
-creator = ProjectCreator(sys.argv[1], sys.argv[2], sys.argv[3])
-creator.create_directories()
-creator.create_files()
-creator.register_project()
+# creator = ProjectCreator(sys.argv[1], sys.argv[2], sys.argv[3])
+# creator.create_directories()
+# creator.create_files()
+# creator.register_project()
+
+def parse_input_arguments():
+    description = """example:
+  {script_name} 5 \"sexy prime pairs\"
+  To create the following files structure:
+  project
+  ├── src
+  │   └── 005-sexy_prime_pairs
+  │       ├── include/sexy_prime_pairs/solution.hpp
+  │       └── CMakeLists.txt
+  └── tests
+      └── 005-sexy_prime_pairs
+          ├── sexy_prime_pairs.cpp
+          └── CMakeLists.txt
+
+""".format(script_name=os.path.basename(__file__))
+
+    parser = argparse.ArgumentParser(
+        description=description, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument(
+        "number", type=int, help="Number of the challenge aligned with the book")
+    parser.add_argument("name", help="Name of the challenge")
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    parse_input_arguments()
+
+    # Make sure it's called in the right directory
+    # Create src structure from templates
+    # Create tests structure from templates
+    # Extend src/CMakeLists.txt in the right place
