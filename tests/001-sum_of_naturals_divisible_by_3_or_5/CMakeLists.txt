@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
 
-include(GoogleTest)
 
 set(target_name 001-sum_of_naturals_divisible_by_3_or_5-tests)
 add_executable(${target_name} sum_of_naturals_divisible_by_3_or_5.cpp)
@@ -13,4 +12,5 @@ PRIVATE
     001-sum_of_naturals_divisible_by_3_or_5
 )
 
-gtest_discover_tests(${target_name} TEST_PREFIX 1:)
+include(GoogleTest)
+gtest_discover_tests(${target_name})
