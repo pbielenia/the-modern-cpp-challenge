@@ -1,13 +1,25 @@
 #pragma once
 
-unsigned long long sum_of_naturals_divisible_by_3_or_5(unsigned value_limit)
-{
-    unsigned long long sum{0};
+namespace solution {
 
-    for (unsigned int i = 3; i <= value_limit; ++i) {
-        if ((i % 3) == 0 || (i % 5) == 0) {
-            sum += i;
-        }
-    }
-    return sum;
+bool NumberIsDivisible(unsigned number, unsigned divider) {
+  return (number % divider) == 0;
 }
+
+// Returns the sum of all natural numbers divisible by 3 OR 5, up to the
+// `value_limit`.
+unsigned long long SumOfNaturalsDivisibleByThreeOrFive(unsigned value_limit) {
+  static unsigned start_value{3};
+
+  unsigned long long sum{0};
+
+  for (auto number = start_value; number <= value_limit; ++number) {
+    if (NumberIsDivisible(number, 3) || NumberIsDivisible(number, 5)) {
+      sum += number;
+    }
+  }
+
+  return sum;
+}
+
+}  // namespace solution
