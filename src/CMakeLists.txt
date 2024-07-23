@@ -17,7 +17,7 @@ add_subdirectory(008-armstrong_numbers)
 # add_subdirectory(14-validating_isbns)
 
 # Chapter 2. Language Features
-add_subdirectory(015-ipv4_data_type)
+add_subdirectory(015-ipv4_address)
 # add_subdirectory(16-enumerating_ipv4_address_in_a_range)
 # add_subdirectory(17-creating_a_2d_array_with_basic_operations)
 # add_subdirectory(18-minimum_function_with_any_number_of_arguments)
