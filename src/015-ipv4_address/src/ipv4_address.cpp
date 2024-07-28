@@ -61,7 +61,7 @@ std::optional<std::string> MakeStringFromNumericArray(
   string.resize(max_string_size);
 
   auto* previous_end = string.data();
-  for (unsigned index = 0; index < Size; ++index) {
+  for (unsigned index = 0U; index < Size; ++index) {
     auto result = std::to_chars(previous_end, string.data() + string.size(),
                                 array.at(index));
     if (result.ec != std::errc()) {
@@ -102,6 +102,37 @@ std::ostream& operator<<(std::ostream& stream,
                          const IPv4Address& ipv4_address) {
   stream << ipv4_address.ToString();
   return stream;
+}
+
+bool operator==(const IPv4Address& lhs, const IPv4Address& rhs) {
+  for (auto index = 0U; index < defaults::ipv4_parts_number; ++index) {
+    if (lhs.address_.at(index) != rhs.address_.at(index)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool operator!=(const IPv4Address& lhs, const IPv4Address& rhs) {
+  return !(lhs == rhs);
+}
+
+bool operator<(const IPv4Address& lhs, const IPv4Address& rhs) {
+  for (auto index = 0U; index < defaults::ipv4_parts_number; ++index) {
+    if (lhs.address_.at(index) < rhs.address_.at(index)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool operator>(const IPv4Address& lhs, const IPv4Address& rhs) {
+  for (auto index = 0U; index < defaults::ipv4_parts_number; ++index) {
+    if (lhs.address_.at(index) > rhs.address_.at(index)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 }  // namespace solution

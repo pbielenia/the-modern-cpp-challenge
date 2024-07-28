@@ -19,6 +19,11 @@ class IPv4Address {
 
   std::string ToString() const;
 
+  friend bool operator==(const IPv4Address&, const IPv4Address&);
+  friend bool operator!=(const IPv4Address&, const IPv4Address&);
+  friend bool operator<(const IPv4Address&, const IPv4Address&);
+  friend bool operator>(const IPv4Address&, const IPv4Address&);
+
  private:
   AddressArray address_;
 };
@@ -34,5 +39,10 @@ class IPv4Address {
 std::optional<IPv4Address> MakeIPv4Address(std::string_view address);
 
 std::ostream& operator<<(std::ostream&, const IPv4Address&);
+
+bool operator==(const IPv4Address& lhs, const IPv4Address& rhs);
+bool operator!=(const IPv4Address& lhs, const IPv4Address& rhs);
+bool operator<(const IPv4Address& lhs, const IPv4Address& rhs);
+bool operator>(const IPv4Address& lhs, const IPv4Address& rhs);
 
 }  // namespace solution
