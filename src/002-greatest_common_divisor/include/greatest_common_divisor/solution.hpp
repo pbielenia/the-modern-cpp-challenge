@@ -1,24 +1,27 @@
 #pragma once
 
-unsigned int gcd_recursive(unsigned int a, unsigned int b)
-{
-    auto c = a % b;
+namespace solution {
 
-    if (c == 0)
-        return b;
-    else
-        return gcd_recursive(b, c);
+// Finds Greatest Common Divisor
+unsigned GcdResursive(unsigned a, unsigned b) {
+  auto c = a % b;
+
+  if (c == 0)
+    return b;
+  else
+    return GcdResursive(b, c);
 }
 
-unsigned int gcd_iterative(unsigned int a, unsigned int b)
-{
-    unsigned int c{0};
+unsigned GcdIterative(unsigned a, unsigned b) {
+  unsigned c{0};
 
-    do {
-        c = a % b;
-        a = b;
-        b = c;
-    } while (c != 0);
+  do {
+    c = a % b;
+    a = b;
+    b = c;
+  } while (c != 0);
 
-    return a;
+  return a;
 }
+
+}  // namespace solution
