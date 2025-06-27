@@ -5,16 +5,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS On)
 
-option(ENABLE_TESTING "Enable tests builds" On)
+enable_testing()
 
-if(ENABLE_TESTING)
-    message(STATUS "Building with tests")
-    enable_testing()
-    add_subdirectory(tests)
-
-    add_subdirectory(libs/googletest)
-    # Disable installation of GTest
-    set(INSTALL_GTEST OFF CACHE INTERNAL "")
-endif()
-
+add_subdirectory(libs/googletest)
 add_subdirectory(src)
+
+# Disable installation of GTest
+set(INSTALL_GTEST OFF CACHE INTERNAL "")
