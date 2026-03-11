@@ -1,6 +1,7 @@
 #include <array>
-#include <gmock/gmock.h>
 #include <vector>
+
+#include "gmock/gmock.h"
 
 #include "BinToStrConverter.hpp"
 

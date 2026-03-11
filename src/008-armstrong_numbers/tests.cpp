@@ -1,5 +1,6 @@
-#include <gmock/gmock.h>
 #include <numeric>
+
+#include "gmock/gmock.h"
 
 #include "solution.hpp"
 
