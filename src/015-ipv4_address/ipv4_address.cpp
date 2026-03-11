@@ -28,8 +28,7 @@ namespace {
  */
 template <typename Type, unsigned Size>
 std::optional<std::array<Type, Size>> SplitStringIntoNumericArray(
-    std::string_view string,
-    char delimiter) {
+    std::string_view string, char delimiter) {
   std::array<Type, Size> array;
 
   auto* previous_end = string.begin();

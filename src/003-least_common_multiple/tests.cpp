@@ -1,6 +1,7 @@
-#include "solution.hpp"
 #include <gmock/gmock.h>
 #include <numeric>
+
+#include "solution.hpp"
 
 using namespace testing;
 

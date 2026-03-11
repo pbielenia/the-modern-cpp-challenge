@@ -1,8 +1,9 @@
-#include "solution.hpp"
 #include <gmock/gmock.h>
 #include <numeric>
 
-int main(int argc, char **argv) {
+#include "solution.hpp"
+
+int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

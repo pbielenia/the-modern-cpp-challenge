@@ -18,8 +18,7 @@ int lcm_iterative(int a, int b) {
 }
 
 int lcm_recursive(int const a, int const b, unsigned counter) {
-  if (((counter % a) == 0) && ((counter % b) == 0))
-    return counter;
+  if (((counter % a) == 0) && ((counter % b) == 0)) return counter;
   return lcm_recursive(a, b, counter + 1);
 }
 

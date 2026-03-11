@@ -1,5 +1,6 @@
-#include "ipv4_address.hpp"
 #include <gmock/gmock.h>
+
+#include "ipv4_address.hpp"
 
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
@@ -54,7 +55,12 @@ TEST(IPv4Address, SupportsStreamExtractionOperator) {
 }
 
 struct CompareOperatorsTestData {
-  enum class Comparison { Equal, NotEqual, LessThan, GreaterThan };
+  enum class Comparison {
+    Equal,
+    NotEqual,
+    LessThan,
+    GreaterThan
+  };
 
   CompareOperatorsTestData() = delete;
 
