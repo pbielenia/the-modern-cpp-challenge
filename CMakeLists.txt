@@ -7,8 +7,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS On)
 
 enable_testing()
 
-add_subdirectory(libs/googletest)
-add_subdirectory(src)
+find_package(GTest REQUIRED)
 
-# Disable installation of GTest
-set(INSTALL_GTEST OFF CACHE INTERNAL "")
+add_subdirectory(src)

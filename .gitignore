@@ -1,3 +1,4 @@
-build/
+venv/
 .vscode/
-Testing/
+CMakeUserPresets.json
+build/

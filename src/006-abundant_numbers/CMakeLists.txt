@@ -4,9 +4,7 @@ add_executable(${target_name} tests.cpp)
 target_compile_features(${target_name} PRIVATE cxx_std_17)
 target_link_libraries(${target_name}
     PRIVATE
-        gtest
-        gtest_main
-        gmock
+        gtest::gtest
 )
 
 target_compile_options(${target_name} 
