@@ -26,3 +26,22 @@ add_subdirectory(015-ipv4_address)
 add_subdirectory(023-binary_to_string_conversion)
 # add_subdirectory(24-string_to_binary_conversion)
 # add_subdirectory(25-capitalizing_an_article_title)
+
+# Chapter 4. Streams and Filesystems
+
+# Chapter 5. Date and Time
+
+# Chapter 6. Algorithms and Data Structures
+add_subdirectory(045-priority_queue)
+
+# Chapter 7. Concurrency
+
+# Chapter 8. Design Patterns
+
+# Chapter 9. Data Serialization
+
+# Chapter 10. Archives, Images, and Databases
+
+# Chapter 11. Cryptography
+
+# Chapter 12. Networking and Services
