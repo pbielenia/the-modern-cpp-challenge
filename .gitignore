@@ -1,4 +1,5 @@
-venv/
 .vscode/
+.clangd
 CMakeUserPresets.json
 build/
+venv/
