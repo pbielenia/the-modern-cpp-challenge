@@ -1,9 +1,14 @@
 #include "solution.hpp"
 
+#include <algorithm>
+#include <span>
+
 namespace {
 
-bool NumberIsDivisible(unsigned number, unsigned divider) {
-  return (number % divider) == 0;
+bool NumberIsDivisibleByAnyOf(unsigned number, std::span<const unsigned> divisors) {
+  return std::ranges::any_of(divisors, [&number](auto divisor) {
+    return divisor != 0 && number % divisor == 0;
+  });
 }
 
 }  // namespace
@@ -11,12 +16,12 @@ bool NumberIsDivisible(unsigned number, unsigned divider) {
 namespace solution {
 
 unsigned long long SumOfNaturalsDivisibleByThreeOrFive(unsigned value_limit) {
-  static unsigned start_value{3};
+  static constexpr unsigned kStartValue{3};
+  static constexpr std::array<unsigned, 2> kDivisors{3, 5};
 
   unsigned long long sum{0};
-
-  for (auto number = start_value; number <= value_limit; ++number) {
-    if (NumberIsDivisible(number, 3) || NumberIsDivisible(number, 5)) {
+  for (auto number = kStartValue; number <= value_limit; ++number) {
+    if (NumberIsDivisibleByAnyOf(number, kDivisors)) {
       sum += number;
     }
   }
