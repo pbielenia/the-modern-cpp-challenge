@@ -4,17 +4,20 @@
 
 namespace solution {
 
-namespace defaults {
-constexpr unsigned ipv4_parts_number{4};
-constexpr char dot_delimiter{'.'};
-constexpr unsigned max_address_length{15};  // xxx.xxx.xxx.xxx
-constexpr char invalid_address_string[] = "<invalid>";
-}  // namespace defaults
-
 namespace {
 
+namespace defaults {
+
+constexpr unsigned kIPv4PartsCount{4};
+constexpr char kDotDelimiter{'.'};
+constexpr unsigned kMaxAddressLength{15};  // xxx.xxx.xxx.xxx
+constexpr std::string_view kInvalidAddressString = "<invalid>";
+
+}  // namespace defaults
+
 /**
- * @brief Splits `input` into `Size` numeric elements separated by `delimiter`.
+ * @brief Splits `input` into `Size` numeric elements separated by
+ * `delimiter`.
  *
  * @tparam Type     Target type of numeric elements.
  * @tparam Size     Target number of numeric elements.
@@ -23,13 +26,14 @@ namespace {
  * @param delimiter
  * @return std::optional<std::array<Type, Size>>
  *                  Returns `std::nullopt` if other kind of delimiter is
- *                  encountered or the actual number of output elements does not
- *                  match the expected one.
+ *                  encountered or the actual number of output elements does
+ *                  not match the expected one.
  */
 template <typename Type, unsigned Size>
 std::optional<std::array<Type, Size>> SplitStringIntoNumericArray(
     std::string_view string, char delimiter) {
-  std::array<Type, Size> array;
+  std::array<Type, Size> array{};
+  std::array<std::string_view, Size> string_parts;
 
   auto* previous_end = string.begin();
   for (unsigned index = 0; index < Size; ++index) {
@@ -76,25 +80,22 @@ std::optional<std::string> MakeStringFromNumericArray(
 
 }  // namespace
 
-IPv4Address::IPv4Address(AddressArray address) : address_{std::move(address)} {}
+IPv4Address::IPv4Address(AddressArray address) : address_{address} {}
 
 std::string IPv4Address::ToString() const {
-  return MakeStringFromNumericArray<std::uint8_t, defaults::ipv4_parts_number>(
-             this->address_, defaults::max_address_length,
-             defaults::dot_delimiter)
-      .value_or(defaults::invalid_address_string);
+  return MakeStringFromNumericArray<std::uint8_t, defaults::kIPv4PartsCount>(
+             this->address_, defaults::kMaxAddressLength,
+             defaults::kDotDelimiter)
+      .value_or(std::string(defaults::kInvalidAddressString));
 }
 
 std::optional<IPv4Address> MakeIPv4Address(std::string_view address) {
-  auto address_array =
-      SplitStringIntoNumericArray<std::uint8_t, defaults::ipv4_parts_number>(
-          address, defaults::dot_delimiter);
-
-  if (address_array.has_value()) {
-    return IPv4Address{std::move(address_array.value())};
-  } else {
-    return std::nullopt;
-  }
+  const auto address_array =
+      SplitStringIntoNumericArray<std::uint8_t, defaults::kIPv4PartsCount>(
+          address, defaults::kDotDelimiter);
+  return address_array.has_value()
+             ? std::make_optional(IPv4Address{address_array.value()})
+             : std::nullopt;
 }
 
 std::ostream& operator<<(std::ostream& stream,
@@ -104,7 +105,7 @@ std::ostream& operator<<(std::ostream& stream,
 }
 
 bool operator==(const IPv4Address& lhs, const IPv4Address& rhs) {
-  for (auto index = 0U; index < defaults::ipv4_parts_number; ++index) {
+  for (auto index = 0U; index < defaults::kIPv4PartsCount; ++index) {
     if (lhs.address_.at(index) != rhs.address_.at(index)) {
       return false;
     }
@@ -117,7 +118,7 @@ bool operator!=(const IPv4Address& lhs, const IPv4Address& rhs) {
 }
 
 bool operator<(const IPv4Address& lhs, const IPv4Address& rhs) {
-  for (auto index = 0U; index < defaults::ipv4_parts_number; ++index) {
+  for (auto index = 0U; index < defaults::kIPv4PartsCount; ++index) {
     if (lhs.address_.at(index) < rhs.address_.at(index)) {
       return true;
     }
@@ -126,7 +127,7 @@ bool operator<(const IPv4Address& lhs, const IPv4Address& rhs) {
 }
 
 bool operator>(const IPv4Address& lhs, const IPv4Address& rhs) {
-  for (auto index = 0U; index < defaults::ipv4_parts_number; ++index) {
+  for (auto index = 0U; index < defaults::kIPv4PartsCount; ++index) {
     if (lhs.address_.at(index) > rhs.address_.at(index)) {
       return true;
     }
