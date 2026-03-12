@@ -1,4 +1,6 @@
-#include "gmock/gmock.h"
+#include <ios>
+
+#include "gtest/gtest.h"
 
 #include "ipv4_address.hpp"
 
@@ -7,45 +9,60 @@ int main(int argc, char** argv) {
   return RUN_ALL_TESTS();
 }
 
-using namespace testing;
-
 namespace {
 
-TEST(IPv4Address, ConstructsWellFormed) {
-  auto ipv4_address = solution::MakeIPv4Address("192.168.9.21");
-  ASSERT_TRUE(ipv4_address.has_value());
-  EXPECT_STREQ(ipv4_address.value().ToString().c_str(), "192.168.9.21");
+using namespace testing;
+using AddressArray = solution::IPv4Address::AddressArray;
+
+struct MakeIpv4AddressTestData {
+  std::string input_address;
+  std::optional<solution::IPv4Address> expected;
+};
+
+class MakeIpv4AddressFixture : public TestWithParam<MakeIpv4AddressTestData> {};
+
+TEST_P(MakeIpv4AddressFixture, Mixed) {
+  EXPECT_EQ(solution::MakeIPv4Address(GetParam().input_address),
+            GetParam().expected);
 }
 
-TEST(IPv4Address, ReturnsNulloptAtAddressOutOfByteRange) {
-  auto ipv4_address = solution::MakeIPv4Address("192.168.256.21");
-  EXPECT_FALSE(ipv4_address.has_value());
-}
-
-TEST(IPv4Address, ReturnsNulloptAtInvalidDelimiter) {
-  auto ipv4_address = solution::MakeIPv4Address("192.168/9.21");
-  EXPECT_FALSE(ipv4_address.has_value());
-}
-
-TEST(IPv4Address, ReturnsNulloptAtAddressTooShort) {
-  auto ipv4_address = solution::MakeIPv4Address("192.168.9");
-  EXPECT_FALSE(ipv4_address.has_value());
-}
-
-TEST(IPv4Address, ReturnsNulloptAtAddressTooLong) {
-  auto ipv4_address = solution::MakeIPv4Address("192.168.9.21.50");
-  EXPECT_FALSE(ipv4_address.has_value());
-}
-
-TEST(IPv4Address, ReturnsNulloptAtAddressStartingWithDelimiter) {
-  auto ipv4_address = solution::MakeIPv4Address(".192.168.9.21");
-  EXPECT_FALSE(ipv4_address.has_value());
-}
-
-TEST(IPv4Address, ReturnsNulloptAtAddressEndingWithDelimiter) {
-  auto ipv4_address = solution::MakeIPv4Address("192.168.9.50.");
-  EXPECT_FALSE(ipv4_address.has_value());
-}
+INSTANTIATE_TEST_SUITE_P(MakeIpv4AddressTestSuite,
+                         MakeIpv4AddressFixture,
+                         Values(
+                             MakeIpv4AddressTestData{
+                                 "192.168.9.21",
+                                 AddressArray{192, 168, 9, 21},
+                             },
+                             // Value greater than 255
+                             MakeIpv4AddressTestData{
+                                 "192.168.256.21",
+                                 std::nullopt,
+                             },
+                             // Unexpected character
+                             MakeIpv4AddressTestData{
+                                 "192.168/9.21",
+                                 std::nullopt,
+                             },
+                             // Begins with delimiter
+                             MakeIpv4AddressTestData{
+                                 ".192.168.9.21",
+                                 std::nullopt,
+                             },
+                             // Ends with delimiter
+                             MakeIpv4AddressTestData{
+                                 "192.168.9.21.",
+                                 std::nullopt,
+                             },
+                             // Address too short
+                             MakeIpv4AddressTestData{
+                                 "192.168.9",
+                                 std::nullopt,
+                             },
+                             // Address too long
+                             MakeIpv4AddressTestData{
+                                 "192.168.9.21.50",
+                                 std::nullopt,
+                             }));
 
 TEST(IPv4Address, SupportsStreamExtractionOperator) {
   auto ipv4_address = solution::IPv4Address({192, 168, 9, 50});
@@ -55,204 +72,139 @@ TEST(IPv4Address, SupportsStreamExtractionOperator) {
 }
 
 struct CompareOperatorsTestData {
-  enum class Comparison {
-    Equal,
-    NotEqual,
-    LessThan,
-    GreaterThan
+  struct Results {
+    bool less_than = false;
+    bool equal_to = false;
+    bool not_equal_to = false;
+    bool greater_than = false;
   };
 
-  CompareOperatorsTestData() = delete;
-
-  CompareOperatorsTestData(solution::IPv4Address::AddressArray first_array,
-                           solution::IPv4Address::AddressArray second_array,
-                           Comparison comparison,
-                           bool expected_result)
-      : first{first_array},
-        second{second_array},
-        comparison{comparison},
-        expected_result{expected_result} {}
-
-  solution::IPv4Address first;
-  solution::IPv4Address second;
-  Comparison comparison;
-  bool expected_result;
+  solution::IPv4Address lhs;
+  solution::IPv4Address rhs;
+  Results expected;
 };
 
-std::ostream& operator<<(
-    std::ostream& stream,
-    const CompareOperatorsTestData::Comparison& comparison) {
-  switch (comparison) {
-    case CompareOperatorsTestData::Comparison::Equal:
-      stream << "equal";
-      break;
-    case CompareOperatorsTestData::Comparison::NotEqual:
-      stream << "not equal";
-      break;
-    case CompareOperatorsTestData::Comparison::LessThan:
-      stream << "less than";
-      break;
-    case CompareOperatorsTestData::Comparison::GreaterThan:
-      stream << "greater than";
-      break;
-  }
+constexpr auto kExpectedForLess = CompareOperatorsTestData::Results{
+    .less_than = true,
+    .equal_to = false,
+    .not_equal_to = true,
+    .greater_than = false,
+};
+constexpr auto kExpectedForEqual = CompareOperatorsTestData::Results{
+    .less_than = false,
+    .equal_to = true,
+    .not_equal_to = false,
+    .greater_than = false,
+};
+constexpr auto kExpectedForGreater = CompareOperatorsTestData::Results{
+    .less_than = false,
+    .equal_to = false,
+    .not_equal_to = true,
+    .greater_than = true,
+};
+
+std::ostream& operator<<(std::ostream& stream,
+                         const CompareOperatorsTestData::Results& results) {
+  stream << std::boolalpha << "{ less_than: " << results.less_than
+         << ", equal_to: " << results.equal_to
+         << ", not_equal_to: " << results.not_equal_to
+         << ", greater_than: " << results.greater_than << " }";
   return stream;
 }
 
 std::ostream& operator<<(std::ostream& stream,
                          const CompareOperatorsTestData& data) {
-  stream << "{ " << "first: " << data.first << ", second: " << data.second
-         << ", comparison: " << data.comparison
-         << ", expected_result: " << std::boolalpha << data.expected_result
-         << " }";
+  stream << "{ " << "lhs: " << data.lhs << ", rhs: " << data.rhs
+         << ", expected: " << data.expected << " }";
   return stream;
 }
 
-class IPv4AddressCompareOperatorsFixture
-    : public TestWithParam<CompareOperatorsTestData> {};
+class CompareOperatorsFixture : public TestWithParam<CompareOperatorsTestData> {
+};
 
-TEST_P(IPv4AddressCompareOperatorsFixture, TestComparisonIsTrue) {
-  auto params = GetParam();
-  switch (params.comparison) {
-    case CompareOperatorsTestData::Comparison::Equal:
-      EXPECT_THAT(params.first == params.second, params.expected_result);
-      break;
-    case CompareOperatorsTestData::Comparison::NotEqual:
-      EXPECT_THAT(params.first != params.second, params.expected_result);
-      break;
-    case CompareOperatorsTestData::Comparison::GreaterThan:
-      EXPECT_THAT(params.first > params.second, params.expected_result);
-      break;
-    case CompareOperatorsTestData::Comparison::LessThan:
-      EXPECT_THAT(params.first < params.second, params.expected_result);
-      break;
-  }
+TEST_P(CompareOperatorsFixture, Mixed) {
+  EXPECT_EQ(GetParam().lhs < GetParam().rhs, GetParam().expected.less_than);
+  EXPECT_EQ(GetParam().lhs == GetParam().rhs, GetParam().expected.equal_to);
+  EXPECT_EQ(GetParam().lhs != GetParam().rhs, GetParam().expected.not_equal_to);
+  EXPECT_EQ(GetParam().lhs > GetParam().rhs, GetParam().expected.greater_than);
 }
 
-INSTANTIATE_TEST_SUITE_P(
-    AddressesAreEqualTestSuite,
-    IPv4AddressCompareOperatorsFixture,
-    Values(CompareOperatorsTestData({0, 0, 0, 0},
-                                    {0, 0, 0, 0},
-                                    CompareOperatorsTestData::Comparison::Equal,
-                                    true),
-           CompareOperatorsTestData({255, 255, 255, 255},
-                                    {255, 255, 255, 255},
-                                    CompareOperatorsTestData::Comparison::Equal,
-                                    true),
-           CompareOperatorsTestData({192, 168, 9, 50},
-                                    {192, 168, 9, 50},
-                                    CompareOperatorsTestData::Comparison::Equal,
-                                    true)));
-
-INSTANTIATE_TEST_SUITE_P(
-    AddressesAreNotEqualTestSuite,
-    IPv4AddressCompareOperatorsFixture,
-    Values(
-        CompareOperatorsTestData({1, 0, 0, 0},
-                                 {0, 0, 0, 0},
-                                 CompareOperatorsTestData::Comparison::NotEqual,
-                                 true),
-        CompareOperatorsTestData({0, 1, 0, 0},
-                                 {0, 0, 0, 0},
-                                 CompareOperatorsTestData::Comparison::NotEqual,
-                                 true),
-        CompareOperatorsTestData({0, 0, 1, 0},
-                                 {0, 0, 0, 0},
-                                 CompareOperatorsTestData::Comparison::NotEqual,
-                                 true),
-        CompareOperatorsTestData({0, 0, 0, 0},
-                                 {0, 0, 0, 1},
-                                 CompareOperatorsTestData::Comparison::NotEqual,
-                                 true),
-        CompareOperatorsTestData({255, 255, 255, 1},
-                                 {255, 255, 255, 255},
-                                 CompareOperatorsTestData::Comparison::NotEqual,
-                                 true),
-        CompareOperatorsTestData({192, 168, 1, 50},
-                                 {192, 168, 9, 50},
-                                 CompareOperatorsTestData::Comparison::NotEqual,
-                                 true)));
-
-INSTANTIATE_TEST_SUITE_P(
-    AddressIsLessThanTestSuite,
-    IPv4AddressCompareOperatorsFixture,
-    Values(
-        CompareOperatorsTestData({0, 0, 0, 0},
-                                 {1, 0, 0, 0},
-                                 CompareOperatorsTestData::Comparison::LessThan,
-                                 true),
-        CompareOperatorsTestData({0, 0, 0, 0},
-                                 {0, 1, 0, 0},
-                                 CompareOperatorsTestData::Comparison::LessThan,
-                                 true),
-        CompareOperatorsTestData({0, 0, 0, 0},
-                                 {0, 0, 1, 0},
-                                 CompareOperatorsTestData::Comparison::LessThan,
-                                 true),
-        CompareOperatorsTestData({0, 0, 0, 0},
-                                 {0, 0, 0, 1},
-                                 CompareOperatorsTestData::Comparison::LessThan,
-                                 true),
-        CompareOperatorsTestData({0, 0, 0, 2},
-                                 {0, 0, 1, 1},
-                                 CompareOperatorsTestData::Comparison::LessThan,
-                                 true),
-        CompareOperatorsTestData({192, 168, 1, 50},
-                                 {192, 168, 9, 50},
-                                 CompareOperatorsTestData::Comparison::LessThan,
-                                 true),
-        CompareOperatorsTestData({0, 0, 0, 0},
-                                 {0, 0, 0, 0},
-                                 CompareOperatorsTestData::Comparison::LessThan,
-                                 false),
-        CompareOperatorsTestData({1, 0, 0, 0},
-                                 {0, 0, 0, 0},
-                                 CompareOperatorsTestData::Comparison::LessThan,
-                                 false)));
-
-INSTANTIATE_TEST_SUITE_P(
-    AddressIsGreaterThanTestSuite,
-    IPv4AddressCompareOperatorsFixture,
-    Values(CompareOperatorsTestData(
-               {1, 0, 0, 0},
-               {0, 0, 0, 0},
-               CompareOperatorsTestData::Comparison::GreaterThan,
-               true),
-           CompareOperatorsTestData(
-               {0, 1, 0, 0},
-               {0, 0, 0, 0},
-               CompareOperatorsTestData::Comparison::GreaterThan,
-               true),
-           CompareOperatorsTestData(
-               {0, 0, 1, 0},
-               {0, 0, 0, 0},
-               CompareOperatorsTestData::Comparison::GreaterThan,
-               true),
-           CompareOperatorsTestData(
-               {0, 0, 0, 1},
-               {0, 0, 0, 0},
-               CompareOperatorsTestData::Comparison::GreaterThan,
-               true),
-           CompareOperatorsTestData(
-               {0, 0, 1, 1},
-               {0, 0, 0, 2},
-               CompareOperatorsTestData::Comparison::GreaterThan,
-               true),
-           CompareOperatorsTestData(
-               {192, 168, 9, 50},
-               {192, 168, 1, 50},
-               CompareOperatorsTestData::Comparison::GreaterThan,
-               true),
-           CompareOperatorsTestData(
-               {0, 0, 0, 0},
-               {0, 0, 0, 0},
-               CompareOperatorsTestData::Comparison::GreaterThan,
-               false),
-           CompareOperatorsTestData(
-               {0, 0, 0, 0},
-               {1, 0, 0, 0},
-               CompareOperatorsTestData::Comparison::GreaterThan,
-               false)));
-
+INSTANTIATE_TEST_SUITE_P(CompareOperatorsTestSuite,
+                         CompareOperatorsFixture,
+                         Values(
+                             CompareOperatorsTestData{
+                                 AddressArray{255, 255, 255, 1},
+                                 AddressArray{255, 255, 255, 255},
+                                 kExpectedForLess,
+                             },
+                             CompareOperatorsTestData{
+                                 AddressArray{192, 168, 1, 50},
+                                 AddressArray{192, 168, 9, 50},
+                                 kExpectedForLess,
+                             },
+                             CompareOperatorsTestData{
+                                 AddressArray{0, 0, 0, 0},
+                                 AddressArray{1, 0, 0, 0},
+                                 kExpectedForLess,
+                             },
+                             CompareOperatorsTestData{
+                                 AddressArray{0, 0, 0, 0},
+                                 AddressArray{0, 1, 0, 0},
+                                 kExpectedForLess,
+                             },
+                             CompareOperatorsTestData{
+                                 AddressArray{0, 0, 0, 0},
+                                 AddressArray{0, 0, 1, 0},
+                                 kExpectedForLess,
+                             },
+                             CompareOperatorsTestData{
+                                 AddressArray{0, 0, 0, 0},
+                                 AddressArray{0, 0, 0, 1},
+                                 kExpectedForLess,
+                             },
+                             CompareOperatorsTestData{
+                                 AddressArray{0, 0, 0, 2},
+                                 AddressArray{0, 0, 1, 1},
+                                 kExpectedForLess,
+                             },
+                             CompareOperatorsTestData{
+                                 AddressArray{0, 0, 0, 0},
+                                 AddressArray{0, 0, 0, 0},
+                                 kExpectedForEqual,
+                             },
+                             CompareOperatorsTestData{
+                                 AddressArray{255, 255, 255, 255},
+                                 AddressArray{255, 255, 255, 255},
+                                 kExpectedForEqual,
+                             },
+                             CompareOperatorsTestData{
+                                 AddressArray{192, 168, 9, 50},
+                                 AddressArray{192, 168, 9, 50},
+                                 kExpectedForEqual,
+                             },
+                             CompareOperatorsTestData{
+                                 AddressArray{1, 0, 0, 0},
+                                 AddressArray{0, 0, 0, 0},
+                                 kExpectedForGreater,
+                             },
+                             CompareOperatorsTestData{
+                                 AddressArray{0, 1, 0, 0},
+                                 AddressArray{0, 0, 0, 0},
+                                 kExpectedForGreater,
+                             },
+                             CompareOperatorsTestData{
+                                 AddressArray{0, 0, 1, 0},
+                                 AddressArray{0, 0, 0, 0},
+                                 kExpectedForGreater,
+                             },
+                             CompareOperatorsTestData{
+                                 AddressArray{0, 0, 0, 1},
+                                 AddressArray{0, 0, 0, 0},
+                                 kExpectedForGreater,
+                             },
+                             CompareOperatorsTestData{
+                                 AddressArray{0, 0, 1, 1},
+                                 AddressArray{0, 0, 0, 2},
+                                 kExpectedForGreater,
+                             }));
 }  // namespace

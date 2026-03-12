@@ -17,7 +17,7 @@ constexpr std::string_view kInvalidAddressString = "<invalid>";
 
 /**
  * @brief Splits `input` into `Size` numeric elements separated by
- * `delimiter`.
+ *        `delimiter`.
  *
  * @tparam Type     Target type of numeric elements.
  * @tparam Size     Target number of numeric elements.
@@ -118,21 +118,19 @@ bool operator!=(const IPv4Address& lhs, const IPv4Address& rhs) {
 }
 
 bool operator<(const IPv4Address& lhs, const IPv4Address& rhs) {
-  for (auto index = 0U; index < defaults::kIPv4PartsCount; ++index) {
+  for (size_t index = 0; index < defaults::kIPv4PartsCount; ++index) {
     if (lhs.address_.at(index) < rhs.address_.at(index)) {
       return true;
+    }
+    if (lhs.address_.at(index) > rhs.address_.at(index)) {
+      return false;
     }
   }
   return false;
 }
 
 bool operator>(const IPv4Address& lhs, const IPv4Address& rhs) {
-  for (auto index = 0U; index < defaults::kIPv4PartsCount; ++index) {
-    if (lhs.address_.at(index) > rhs.address_.at(index)) {
-      return true;
-    }
-  }
-  return false;
+  return !(lhs < rhs) && lhs != rhs;
 }
 
 }  // namespace solution
