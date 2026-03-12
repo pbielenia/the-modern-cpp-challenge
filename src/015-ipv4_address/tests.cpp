@@ -1,4 +1,8 @@
+#include <cstddef>
 #include <ios>
+#include <optional>
+#include <sstream>
+#include <string_view>
 
 #include "gtest/gtest.h"
 
@@ -18,6 +22,14 @@ struct MakeIpv4AddressTestData {
   std::string input_address;
   std::optional<solution::IPv4Address> expected;
 };
+
+std::ostream& operator<<(std::ostream& stream,
+                         const MakeIpv4AddressTestData& data) {
+  stream << "{ input_address: \"" << data.input_address << "\", expected: "
+         << (data.expected.has_value() ? data.expected->ToString() : "n/a")
+         << " }";
+  return stream;
+}
 
 class MakeIpv4AddressFixture : public TestWithParam<MakeIpv4AddressTestData> {};
 
@@ -207,4 +219,97 @@ INSTANTIATE_TEST_SUITE_P(CompareOperatorsTestSuite,
                                  AddressArray{0, 0, 0, 2},
                                  kExpectedForGreater,
                              }));
+
+struct SplitStringTestData {
+  std::string string;
+  std::optional<std::vector<std::string_view>> expected;
+};
+
+std::ostream& operator<<(std::ostream& stream,
+                         const std::vector<std::string_view>& data) {
+  stream << "{ ";
+  bool is_first = true;
+  for (const auto& item : data) {
+    if (is_first) {
+      stream << "\"" << item << "\"";
+      is_first = false;
+    } else {
+      stream << ", \"" << item << "\"";
+    }
+  }
+  stream << " }";
+  return stream;
+}
+
+std::string ToString(const std::vector<std::string_view>& data) {
+  std::stringstream stream;
+  stream << data;
+  return stream.str();
+}
+
+std::ostream& operator<<(std::ostream& stream,
+                         const SplitStringTestData& data) {
+  stream << "{ " << "string: \"" << data.string << "\", expected: "
+         << (data.expected.has_value() ? ToString(data.expected.value())
+                                       : "n/a")
+         << " }";
+  return stream;
+}
+
+class SplitStringFixture : public TestWithParam<SplitStringTestData> {};
+
+TEST_P(SplitStringFixture, Size4WithDot) {
+  static constexpr size_t kSize = 4;
+  static constexpr char kDelimiter = '.';
+
+  const auto actual =
+      solution::SplitString<kSize>(GetParam().string, kDelimiter);
+
+  ASSERT_EQ(actual.has_value(), GetParam().expected.has_value());
+  if (!actual.has_value()) {
+    return;
+  }
+
+  for (size_t index = 0; index < kSize; ++index) {
+    EXPECT_EQ(actual.value().at(index), GetParam().expected.value().at(index));
+  }
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    SplitStringTestSuite,
+    SplitStringFixture,
+    Values(
+        SplitStringTestData{
+            "4.4.4.4",
+            std::vector<std::string_view>{"4", "4", "4", "4"},
+        },
+        SplitStringTestData{
+            "1.2.3.4",
+            std::vector<std::string_view>{"1", "2", "3", "4"},
+        },
+        SplitStringTestData{
+            "00.000.0000.00000",
+            std::vector<std::string_view>{"00", "000", "0000", "00000"},
+        },
+        SplitStringTestData{
+            "1.2.3.4.",
+            std::nullopt,
+        },
+        SplitStringTestData{
+            "4.4/4.4",
+            std::nullopt,
+        },
+        SplitStringTestData{
+            ".0.0.0",
+            std::nullopt,
+        },
+        SplitStringTestData{
+            "0.0.0.",
+            std::nullopt,
+        },
+        SplitStringTestData{
+            "0.0..",
+            std::nullopt,
+        }));
+
 }  // namespace

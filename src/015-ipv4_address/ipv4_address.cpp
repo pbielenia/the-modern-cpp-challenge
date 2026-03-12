@@ -32,24 +32,19 @@ constexpr std::string_view kInvalidAddressString = "<invalid>";
 template <typename Type, unsigned Size>
 std::optional<std::array<Type, Size>> SplitStringIntoNumericArray(
     std::string_view string, char delimiter) {
-  std::array<Type, Size> array{};
-  std::array<std::string_view, Size> string_parts;
+  const auto string_parts = SplitString<Size>(string, delimiter);
+  if (!string_parts.has_value()) {
+    return std::nullopt;
+  }
 
-  auto* previous_end = string.begin();
-  for (unsigned index = 0; index < Size; ++index) {
-    auto result = std::from_chars(previous_end, string.end(), array.at(index));
+  std::array<Type, Size> array{};
+  for (size_t index = 0; index < Size; ++index) {
+    const auto& string_part = string_parts.value().at(index);
+    auto result = std::from_chars(string_part.begin(), string_part.end(),
+                                  array.at(index));
     if (result.ec != std::errc()) {
       return std::nullopt;
     }
-    if (*result.ptr != delimiter && result.ptr != string.end()) {
-      return std::nullopt;
-    }
-    previous_end = ++result.ptr;
-  }
-
-  // `previous_end - 1` here points at the last processed character.
-  if ((previous_end - 1) != string.end()) {
-    return std::nullopt;
   }
 
   return array;
