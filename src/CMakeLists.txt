@@ -33,6 +33,21 @@ add_subdirectory(023-binary_to_string_conversion)
 
 # Chapter 6. Algorithms and Data Structures
 add_subdirectory(045-priority_queue)
+# add_subdirectory(046-circular_buffer)
+# add_subdirectory(047-double_buffering)
+# add_subdirectory(048-most_frequent_element_in_dataset)
+# add_subdirectory(049-text_histogram)
+# add_subdirectory(050-filtering_list_of_phone_numbers)
+# add_subdirectory(051-transforming_list_of_phone_numbers)
+# add_subdirectory(052-generating_all_permutations_of_string)
+# add_subdirectory(053-average_movie_rating)
+# add_subdirectory(054-pairing_algorithm)
+# add_subdirectory(055-merge_algorithm)
+# add_subdirectory(056-selection_algorithm)
+# add_subdirectory(057-sorting_algorithm)
+# add_subdirectory(058-shortest_path_between_nodes)
+# add_subdirectory(059-weasel_program)
+# add_subdirectory(060-game_of_life)
 
 # Chapter 7. Concurrency
 
