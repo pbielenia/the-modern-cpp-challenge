@@ -34,7 +34,7 @@ add_subdirectory(023-binary_to_string_conversion)
 # Chapter 6. Algorithms and Data Structures
 add_subdirectory(045-priority_queue)
 add_subdirectory(046-circular_buffer)
-# add_subdirectory(047-double_buffering)
+add_subdirectory(047-double_buffering)
 # add_subdirectory(048-most_frequent_element_in_dataset)
 # add_subdirectory(049-text_histogram)
 # add_subdirectory(050-filtering_list_of_phone_numbers)
