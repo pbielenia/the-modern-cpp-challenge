@@ -82,7 +82,6 @@ void CircularBuffer<T>::Push(T&& item) {
   data_[write_position_.Index()] = std::move(item);
   write_position_.Advance();
   size_ = std::min(size_ + 1, Capacity());
-
 }
 
 template <typename T>

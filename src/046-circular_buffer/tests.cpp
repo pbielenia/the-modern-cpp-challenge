@@ -59,7 +59,7 @@ TEST_F(CircularBufferFixture, Mixed) {
   // [ __ __ ]
   //    ^
   VerifyState({.is_full = false, .size = 0});
-  t, .s buffer_->Push(10);
+  buffer_->Push(10);
   // [ 10 __ __ ]
   //    ^
   VerifyState({.is_full = false, .size = 1, .front = 10});
