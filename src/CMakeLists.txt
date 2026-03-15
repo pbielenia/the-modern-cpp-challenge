@@ -50,8 +50,20 @@ add_subdirectory(048-most_frequent_element_in_dataset)
 # add_subdirectory(060-game_of_life)
 
 # Chapter 7. Concurrency
+# add_subdirectory(061-concurrent_transform_algorithm)
+# add_subdirectory(062-concurrent_search_for_min_and_max_using_threads)
+# add_subdirectory(063-concurrent_search_for_min_and_max_using_async)
+# add_subdirectory(064-concurrent_sort_algorithm)
+# add_subdirectory(065-thread_safe_console_output)
+# add_subdirectory(066-customer_service_system)
 
 # Chapter 8. Design Patterns
+# add_subdirectory(067-password_validation)
+# add_subdirectory(068-random_password_generation)
+# add_subdirectory(069-social_security_number_generation)
+# add_subdirectory(070-approval_system)
+# add_subdirectory(071-observable_vector_container)
+# add_subdirectory(072-order_price_calculation_with_discounts)
 
 # Chapter 9. Data Serialization
 
