@@ -1,3 +1,7 @@
 #pragma once
 
-namespace solution {}  // namespace solution
+namespace solution {
+
+//
+
+}  // namespace solution
