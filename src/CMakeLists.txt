@@ -58,7 +58,7 @@ add_subdirectory(048-most_frequent_element_in_dataset)
 # add_subdirectory(066-customer_service_system)
 
 # Chapter 8. Design Patterns
-# add_subdirectory(067-password_validation)
+add_subdirectory(067-password_validation)
 # add_subdirectory(068-random_password_generation)
 # add_subdirectory(069-social_security_number_generation)
 # add_subdirectory(070-approval_system)
