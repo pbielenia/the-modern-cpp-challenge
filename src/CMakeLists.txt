@@ -21,15 +21,38 @@ add_subdirectory(015-ipv4_address)
 # add_subdirectory(16-enumerating_ipv4_address_in_a_range)
 # add_subdirectory(17-creating_a_2d_array_with_basic_operations)
 # add_subdirectory(18-minimum_function_with_any_number_of_arguments)
+# add_subdirectory(019-adding_range_of_values_to_container)
+# add_subdirectory(020-any_all_or_none_in_container)
+# add_subdirectory(021-wrapper_class_for_system_handle)
+# add_subdirectory(022-displaying_multiple_temperature_scales)
 
 # Chapter 3. Strings and Regular Expressions
 add_subdirectory(023-binary_to_string_conversion)
 # add_subdirectory(24-string_to_binary_conversion)
 # add_subdirectory(25-capitalizing_an_article_title)
+# add_subdirectory(026-joining_strings_with_separator)
+# add_subdirectory(027-splitting_string_into_tokens_with_multiple_delimiters)
+# add_subdirectory(028-longest_palindromic_substring)
+# add_subdirectory(029-validating_license_plates)
+# add_subdirectory(030-extracting_url_components)
+# add_subdirectory(031-transforming_dates_in_strings)
 
 # Chapter 4. Streams and Filesystems
+# add_subdirectory(032-pascals_triangle)
+# add_subdirectory(033-process_list_as_table)
+# add_subdirectory(034-removing_empty_lines_from_text_file)
+# add_subdirectory(035-calculating_directory_size)
+# add_subdirectory(036-deleting_files_older_than_date)
+# add_subdirectory(037-searching_directory_for_files_matching_regex)
+# add_subdirectory(038-temporary_log_files)
 
 # Chapter 5. Date and Time
+# add_subdirectory(039-measuring_function_execution_time)
+# add_subdirectory(040-number_of_days_between_dates)
+# add_subdirectory(041-day_of_week)
+# add_subdirectory(042-day_and_week_number_in_year)
+# add_subdirectory(043-meeting_times_across_time_zones)
+# add_subdirectory(044-monthly_calendar)
 
 # Chapter 6. Algorithms and Data Structures
 add_subdirectory(045-priority_queue)
@@ -66,9 +89,37 @@ add_subdirectory(067-password_validation)
 # add_subdirectory(072-order_price_calculation_with_discounts)
 
 # Chapter 9. Data Serialization
+# add_subdirectory(073-data_serialization_to_file)
+# add_subdirectory(074-retrieving_data_from_xml_file_using_xpath)
+# add_subdirectory(075-json_data_serialization)
+# add_subdirectory(076-json_data_deserialization)
+# add_subdirectory(077-generating_pdf_file_with_movie_list)
+# add_subdirectory(078-generating_pdf_file_from_image_collection)
 
 # Chapter 10. Archives, Images, and Databases
+# add_subdirectory(079-searching_files_in_zip_archive)
+# add_subdirectory(080-creating_and_extracting_zip_archives)
+# add_subdirectory(081-creating_and_extracting_password_protected_zip_archives)
+# add_subdirectory(082-generating_png_with_national_flag)
+# add_subdirectory(083-generating_png_with_captcha_text)
+# add_subdirectory(084-ean_13_barcode_generator)
+# add_subdirectory(085-reading_movie_information_from_sqlite_database)
+# add_subdirectory(086-transactional_insertion_of_movie_data_into_sqlite_database)
+# add_subdirectory(087-handling_multimedia_in_sqlite_database)
 
 # Chapter 11. Cryptography
+# add_subdirectory(088-caesar_cipher)
+# add_subdirectory(089-vigenere_cipher)
+# add_subdirectory(090-base64_encoding_and_decoding)
+# add_subdirectory(091-validating_user_authentication)
+# add_subdirectory(092-computing_file_hashes)
+# add_subdirectory(093-file_encryption_and_decryption)
+# add_subdirectory(094-file_signing)
 
 # Chapter 12. Networking and Services
+# add_subdirectory(095-finding_ip_address_for_host)
+# add_subdirectory(096-client_server_fizz_buzz_game)
+# add_subdirectory(097-bitcoin_exchange_rates)
+# add_subdirectory(098-retrieving_emails_using_imap)
+# add_subdirectory(099-translating_text_to_any_language)
+# add_subdirectory(100-face_detection_in_images)
