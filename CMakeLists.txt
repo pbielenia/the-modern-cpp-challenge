@@ -8,5 +8,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS On)
 enable_testing()
 
 find_package(GTest REQUIRED)
+find_package(TBB REQUIRED)
 
 add_subdirectory(src)

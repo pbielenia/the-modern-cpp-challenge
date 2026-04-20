@@ -73,7 +73,7 @@ add_subdirectory(048-most_frequent_element_in_dataset)
 # add_subdirectory(060-game_of_life)
 
 # Chapter 7. Concurrency
-# add_subdirectory(061-concurrent_transform_algorithm)
+add_subdirectory(061-concurrent_transform_algorithm)
 # add_subdirectory(062-concurrent_search_for_min_and_max_using_threads)
 # add_subdirectory(063-concurrent_search_for_min_and_max_using_async)
 # add_subdirectory(064-concurrent_sort_algorithm)
