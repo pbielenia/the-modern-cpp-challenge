@@ -89,7 +89,7 @@ add_subdirectory(067-password_validation)
 # add_subdirectory(072-order_price_calculation_with_discounts)
 
 # Chapter 9. Data Serialization
-# add_subdirectory(073-data_serialization_to_file)
+add_subdirectory(073-data_serialization_to_file)
 # add_subdirectory(074-retrieving_data_from_xml_file_using_xpath)
 # add_subdirectory(075-json_data_serialization)
 # add_subdirectory(076-json_data_deserialization)

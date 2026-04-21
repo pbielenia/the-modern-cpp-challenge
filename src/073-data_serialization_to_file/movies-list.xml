@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<movies>
+    <movie id="9871" title="Forrest Gump" year="1994" length="202">
+        <cast>
+            <role star="Tom Hanks" name="Forrest Gump" />
+            <role star="Sally Field" name="Mrs Gump" />
+            <role star="Robin Wright" name="Jenny Curran" />
+            <role star="Mykelti Williamson" name="Bubba Blue" />
+        </cast>
+        <directors>
+            <director name="Robert Zemeckis" />
+        </directors>
+        <writers>
+            <writer name="Winston Groom" />
+            <writer name="Eric Roth" />
+        </writers>
+    </movie>
+    <movie id="9872" title="The Shawshank Redemption" year="1994" length="142">
+        <cast>
+            <role star="Tim Robbins" name="Andy Dufresne" />
+            <role star="Morgan Freeman" name="Ellis Redding" />
+        </cast>
+        <directors>
+            <director name="Frank Darabont" />
+        </directors>
+        <writers>
+            <writer name="Stephen King" />
+            <writer name="Frank Darabont" />
+        </writers>
+    </movie>
+</movies>

@@ -8,6 +8,7 @@ class ConanPackage(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     requires = (
         "gtest/1.17.0",
+        "pugixml/1.15",
     )
     tool_requires = "cmake/4.1.2"
     generators = "CMakeDeps", "CMakeToolchain"
